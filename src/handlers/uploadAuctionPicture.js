@@ -1,6 +1,7 @@
 import middy from "@middy/core";
 import validator from "@middy/validator";
 import httpErrorHandler from "@middy/http-error-handler";
+import cors from "@middy/http-cors";
 import createError from "http-errors";
 import { setAuctionPictureUrl } from "../lib/setAuctionPictureUrl";
 import { uploadPictureToS3 } from "../lib/uploadPictureToS3";
@@ -49,6 +50,7 @@ function isBase64(str) {
 
 export const handler = middy(uploadAuctionPicture)
   .use(httpErrorHandler())
+  .use(cors())
   .use(
     validator({
       inputSchema: uploadAuctionPictureSchema,
